@@ -10,7 +10,8 @@
         "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
-        "livewire/volt": "^1.0"
+        "livewire/volt": "^1.0",
+        "wireui/wireui": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",
