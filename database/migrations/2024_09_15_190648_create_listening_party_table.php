@@ -11,11 +11,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('listening_party', function (Blueprint $table) {
+        Schema::create('listening_partie', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Episode::class)->constrained()->cascadeOnDelete();
             $table->string('title');
+            $table->boolean('is_active')->default(true);
             $table->dateTime('start_at');
+            $table->dateTime('end_at');
             $table->timestamps();
         });
     }
