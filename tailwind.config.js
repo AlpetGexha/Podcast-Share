@@ -1,10 +1,11 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import colors from 'tailwindcss/colors';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    presets: [
-      require("./vendor/wireui/wireui/tailwind.config.js")
+    preset: [
+        require("./vendor/wireui/wireui/tailwind.config.js")
     ],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
@@ -20,6 +21,17 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                serif: ['Aleo', 'serif'],
+                cursive: ['Annie Use Your Telescope', 'cursive']
+            },
+
+            colors: {
+                primary: colors.emerald,
+                secondary: colors.gray,
+                positive: colors.green,
+                negative: colors.red,
+                warning: colors.amber,
+                info: colors.blue
             },
         },
     },
