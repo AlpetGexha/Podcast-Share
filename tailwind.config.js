@@ -4,6 +4,8 @@ import colors from 'tailwindcss/colors';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'selector',
+
     preset: [
         require("./vendor/wireui/wireui/tailwind.config.js")
     ],
