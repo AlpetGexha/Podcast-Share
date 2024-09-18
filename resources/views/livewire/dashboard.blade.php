@@ -18,6 +18,8 @@ new class extends Component {
 
     public function createListeningParty()
     {
+        $this->validate();
+
         $episode = Episode::create([
             'media_url' => $this->mediaUrl,
         ]);
