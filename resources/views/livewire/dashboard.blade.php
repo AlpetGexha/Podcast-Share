@@ -67,7 +67,7 @@ new class extends Component {
             <h3 class="text-xl font-semibold mb-4">Ongoing Listening Parties</h3>
             <div class="bg-white rounded-lg shadow overflow-hidden">
                 <div class="overflow-y-auto max-h-[calc(50vh-8rem)]">
-                    @foreach ($listening_parties as $listeningParty)
+                    @forelse ($listening_parties as $listeningParty)
                         <a href="{{ route('parties.show', $listeningParty) }}" class="block">
                             <div
                                 class="flex items-center justify-between p-4 border-b border-gray-200 hover:bg-gray-50 transition duration-150 ease-in-out">
@@ -86,6 +86,7 @@ new class extends Component {
                                         <div class="text-xs text-gray-400 truncate">
                                             {{ $listeningParty->episode?->podcast?->title }}
                                         </div>
+                                        {{-- check the timestamp how much left to start or check if its live (check state) --}}
                                         <div class="mt-1 text-xs text-slate-600" x-data="{
                                             startTime: {{ $listeningParty->start_at->timestamp }},
                                             countdownText: '',
@@ -128,7 +129,11 @@ new class extends Component {
                                 <x-button flat xs class="w-20">Join</x-button>
                             </div>
                         </a>
-                    @endforeach
+                    @empty
+                        <div class="flex items-center justify-center p-6 font-serif text-sm">
+                            No listening parties started yet... 😔
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>
