@@ -15,14 +15,16 @@ class ProcessPodcastUrl implements ShouldQueue
 
 
     // https://feeds.simplecast.com/sY509q85
+
     /**
      * Create a new job instance.
      */
     public function __construct(
-        public string $rssUrl,
+        public string         $rssUrl,
         public ListeningParty $listeningParty,
-        public Episode $episode
-    ) {
+        public Episode        $episode
+    )
+    {
         //
     }
 
@@ -35,7 +37,7 @@ class ProcessPodcastUrl implements ShouldQueue
         // grab the latest episode
         // add the latest episode media url to the existing episode
         // update the existing episode's media url to the latest episode's media url
-        // find the episodes length and set the listening end_time to the start_time + length of the episode
+        // find the episodes length and set the listening end_time to the start_at + length of the episode
 
         $xml = simplexml_load_file($this->rssUrl);
 
@@ -45,7 +47,7 @@ class ProcessPodcastUrl implements ShouldQueue
         $latestEpisode = $xml->channel->item[0];
 
         $episodeTitle = $latestEpisode->title;
-        $episodeMediaUrl = (string) $latestEpisode->enclosure['url'];
+        $episodeMediaUrl = (string)$latestEpisode->enclosure['url'];
 
         // register the itunes namespace to grab the duration
         $namespaces = $xml->getNamespaces(true);
@@ -53,9 +55,9 @@ class ProcessPodcastUrl implements ShouldQueue
 
         $episodeLength = $latestEpisode->children($itunesNamespace)->duration;
 
-        // $interval = CarbonInterval::createFromFormat('H:i:s', $episodeLength);
+        $interval = CarbonInterval::createFromFormat('H:i:s', $episodeLength);
 
-        //     $endTime = $this->listeningParty->start_time->add($interval);
+        $endTime = $this->listeningParty->start_at->add($interval);
 
         // save these to the database
         // create the Podcast, and then upate the episode to be linked to the podcast
@@ -74,9 +76,9 @@ class ProcessPodcastUrl implements ShouldQueue
         ]);
 
 
-        // $this->listeningParty->update([
-        //     'end_time' => $endTime,
-        // ]);
+        $this->listeningParty->update([
+            'end_time' => $endTime,
+        ]);
 
     }
 }
