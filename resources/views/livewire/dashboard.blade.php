@@ -19,18 +19,21 @@ new class extends Component {
 
     public function createListeningParty()
     {
+
         $episode = Episode::create([
             'media_url' => $this->mediaUrl,
         ]);
 
-        ListeningParty::create([
+        $listeningParty = ListeningParty::create([
             'episode_id' => $episode->id,
-            'name' => $this->name,
+            'title' => $this->name,
             'start_at' => $this->start_at,
         ]);
+
+        return redirect()->route('parties.show', $listeningParty);
     }
 
-    public function with()
+    public function with(): array
     {
         return [
             'listening_party' => ListeningParty::all()
@@ -44,10 +47,10 @@ new class extends Component {
     {{-- Top Half: Create New Listening Party Form --}}
     <div class="flex items-center justify-center p-4">
         <div class="w-full max-w-lg">
-            <form wire:click="createListeningParty" class="mt-6 space-y-6">
+            <form wire:submit="createListeningParty" class="mt-6 space-y-6">
                 <x-input wire:model='name' placeholder="Listening Party Name"/>
                 <x-input wire:model='mediaUrl' placeholder="Listening Party Name"/>
-                <x-input wire:model='start_at' placeholder="Listening Party Start Time"
+                <x-datetime-picker wire:model='start_at' placeholder="Listening Party Start Time"
                          :min="now()->subDays(1)"/>
                 <x-button type="submit" class="w-full">Create Listening Party</x-button>
             </form>

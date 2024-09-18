@@ -13,8 +13,8 @@ class ListeningParty extends Model
     protected $table = 'listening_partie';
 
     protected $fillable = [
-        'episode_id',
         'title',
+        'episode_id',
         'start_at',
         'end_at',
         'is_active',
