@@ -2,18 +2,20 @@
 
 use Livewire\Volt\Component;
 use App\Models\ListeningParty;
+
 new class extends Component {
+
     public $listeningParty;
+
     public function mount(ListeningParty $listeningParty)
     {
-        // $listeningParty->load('episode');
         $this->listeningParty = $listeningParty->load('episode.podcast');
-
     }
 }; ?>
 <div class="flex flex-col max-h-screen min-h-screen m-auto">
-    @if ($listeningParty->end_at !== null) // The Job its still runing or not created yet
-        <div class="flex items-center justify-center p-4" wire:poll.5s>
+    {{-- The Job its still runing or not created yet --}}
+    @if ($listeningParty->end_at === null)
+        <div class="flex items-center justify-center p-4" wire:poll.3s>
             Creating a new listening party hold tight...
         </div>
     @else
@@ -66,8 +68,8 @@ new class extends Component {
                 return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
             }
         }" x-init="initializeAudio()">
-            <audio x-ref="audioPlayer" :src="'{{ $listeningParty->episode->media_url }}'" preload="auto"></audio>
-            <div>{{ $listeningParty->podcast->title }}</div>
+            {{--            <audio x-ref="audioPlayer" :src="'{{ $listeningParty->episode->media_url }}'" preload="auto"></audio>--}}
+            <div>{{ $listeningParty->episode->podcast->title }}</div>
             <div>{{ $listeningParty->episode->title }}</div>
             <div>
                 Current Time: <span x-text="formatTime(currentOffset)"></span>
@@ -76,7 +78,7 @@ new class extends Component {
             <div>Start Time: {{ $listeningParty->start_at }}</div>
             <div>Server Time: {{ now() }}</div>
             <button x-show="showPlayButton" @click="manualPlay()"
-                class="mt-4 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+                    class="mt-4 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
                 Start Listening
             </button>
         </div>
