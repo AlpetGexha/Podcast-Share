@@ -4,9 +4,9 @@ use App\Models\Episode;
 use App\Models\ListeningParty;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
+use App\Jobs\ProcessPodcastUrl;
 
 new class extends Component {
-
     #[Validate('required|string|max:255')]
     public string $name = '';
 
@@ -16,10 +16,8 @@ new class extends Component {
     #[Validate('required')]
     public $start_at;
 
-
     public function createListeningParty()
     {
-
         $episode = Episode::create([
             'media_url' => $this->mediaUrl,
         ]);
@@ -30,16 +28,17 @@ new class extends Component {
             'start_at' => $this->start_at,
         ]);
 
+        ProcessPodcastUrl::dispatch($this->mediaUrl, $listeningParty, $episode);
+
         return redirect()->route('parties.show', $listeningParty);
     }
 
     public function with(): array
     {
         return [
-            'listening_party' => ListeningParty::all()
+            'listening_party' => ListeningParty::all(),
         ];
     }
-
 }; ?>
 
 
@@ -48,10 +47,9 @@ new class extends Component {
     <div class="flex items-center justify-center p-4">
         <div class="w-full max-w-lg">
             <form wire:submit="createListeningParty" class="mt-6 space-y-6">
-                <x-input wire:model='name' placeholder="Listening Party Name"/>
-                <x-input wire:model='mediaUrl' placeholder="Listening Party Name"/>
-                <x-datetime-picker wire:model='start_at' placeholder="Listening Party Start Time"
-                         :min="now()->subDays(1)"/>
+                <x-input wire:model='name' placeholder="Listening Party Name" />
+                <x-input wire:model='mediaUrl' placeholder="Listening Party Name" />
+                <x-datetime-picker wire:model='start_at' placeholder="Listening Party Start Time" :min="now()->subDays(1)" />
                 <x-button type="submit" class="w-full">Create Listening Party</x-button>
             </form>
         </div>
