@@ -25,10 +25,8 @@ class ListeningParty extends Model
         'end_at' => 'datetime',
         'is_active' => 'boolean',
     ];
-
     public function episode(): BelongsTo
     {
-        return $this->belongTo(Episode::class);
+        return $this->belongsTo(Episode::class);
     }
-
 }

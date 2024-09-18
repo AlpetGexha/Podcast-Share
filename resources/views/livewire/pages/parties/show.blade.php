@@ -12,8 +12,8 @@ new class extends Component {
 }; ?>
 <div>
     {{ $listeningParty }}
-    {{ $listeningParty->episode->title }}
     {{ $listeningParty->start_at }}
-    {{-- {{ $listeningParty->episode->podcast->title }} --}}
+    {{-- {{ $listeningParty->episode->title }} --}}
+    {{-- {{ $listeningParty->episode->podcast->title --}}
     {{-- <img src="{{ $listeningParty->episode->podcast->artwork_url }}" class="size-28" /> --}}
 </div>
