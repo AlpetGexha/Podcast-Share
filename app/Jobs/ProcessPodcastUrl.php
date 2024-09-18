@@ -59,6 +59,7 @@ class ProcessPodcastUrl implements ShouldQueue
 
         $endTime = $this->listeningParty->start_at->add($interval);
 
+
         // save these to the database
         // create the Podcast, and then upate the episode to be linked to the podcast
 
@@ -77,7 +78,7 @@ class ProcessPodcastUrl implements ShouldQueue
 
 
         $this->listeningParty->update([
-            'end_time' => $endTime,
+            'end_at' => $endTime,
         ]);
 
     }
