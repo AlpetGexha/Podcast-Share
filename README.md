@@ -3,7 +3,11 @@
 Is a simple platform that allow to listen a RSS Feed Podcast with other people
 
 U can listen, react and chat on real time.
-...
+
+![mainpage](https://github.com/user-attachments/assets/c2943558-d7c8-4796-a448-5a48a7fc9777)
+
+![showpage](https://github.com/user-attachments/assets/aaa0b65e-6369-43ff-a8b9-4f3a12724995)
+
 
 #### How does it work
 
