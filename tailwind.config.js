@@ -28,9 +28,9 @@ export default {
             },
 
             colors: {
-                // primary: colors.indigo,
-                // gray: colors.slate,
-                primary: colors.emerald,
+                primary: colors.indigo,
+                gray: colors.slate,
+                // primary: colors.emerald,
                 secondary: colors.gray,
                 positive: colors.green,
                 negative: colors.red,

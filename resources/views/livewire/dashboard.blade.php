@@ -12,13 +12,9 @@ new class extends Component {
 
     #[Validate('required')]
     public $start_at;
+
     #[Validate('required|url')]
     public string $mediaUrl = 'https://feeds.simplecast.com/sY509q85';
-
-    public function mount()
-    {
-        $this->start_at = now()->addMinutes(2);
-    }
 
     public function createListeningParty()
     {
@@ -42,33 +38,22 @@ new class extends Component {
     public function with()
     {
         return [
-            'listeningParties' => ListeningParty::where('is_active', true)->whereNotNull('end_time')->orderBy('start_at', 'asc')->with('episode.podcast')->get(),
+            'listeningParties' => ListeningParty::query()
+                ->with('episode.podcast')
+                ->active()
+                ->notEnded()
+                ->orderBy('start_at', 'asc')
+                ->get(),
         ];
     }
 
     public function placeholder()
     {
-        return <<<'HTML'
-        <div class="flex items-center justify-center min-h-screen bg-emerald-50">
-
-                <div class="flex items-center justify-center space-x-8">
-                    <div class="relative flex items-center justify-center w-16 h-16">
-                        <span
-                            class="absolute inline-flex rounded-full opacity-75 size-10 bg-emerald-400 animate-ping"></span>
-                        <span
-                            class="relative inline-flex items-center justify-center text-2xl font-bold text-white rounded-full size-12 bg-emerald-500">
-                            🫶
-                            </svg>
-                        </span>
-                    </div>
-
-            </div>
-        </div>
-        HTML;
+        return view('components.skeleton-view');
     }
 }; ?>
 
-<div class="flex flex-col min-h-screen pt-8 bg-emerald-50">
+<div class="flex flex-col min-h-screen pt-8 bg-primary-50">
     {{-- Top Half: Create New Listening Party Form --}}
     <div class="flex items-center justify-center p-4">
         <div class="w-full max-w-lg">
@@ -90,7 +75,6 @@ new class extends Component {
         <div class="max-w-lg mx-auto">
             <h3 class="mb-4 font-serif text-[0.9rem] font-bold">Upcoming Listening Parties</h3>
             <div class="bg-white rounded-lg shadow-lg">
-
                 @forelse ($listeningParties as $listeningParty)
                     <div wire:key="{{ $listeningParty->id }}">
                         <a href="{{ route('parties.show', $listeningParty) }}" class="block">
@@ -108,7 +92,7 @@ new class extends Component {
                                             <p class="max-w-xs text-sm truncate text-slate-600">
                                                 {{ $listeningParty->episode->title }}</p>
                                             <p class="text-[0.7rem] tracking-tighter uppercase text-slate-400">
-                                                {{ $listeningParty->episode->podcast->title }}</p>
+                                                {{ $listeningParty->podcast->title }}</p>
                                         </div>
                                         <div class="mt-1 text-xs text-slate-600" x-data="{
                                                 startTime: {{ $listeningParty->start_at->timestamp }},
@@ -156,11 +140,10 @@ new class extends Component {
                         </a>
                     </div>
                 @empty
-                    <div class="flex items-center justify-center p-6 font-serif text-sm">
-                        No awwdio listening parties started yet... 😔
+                    <div class="flex items-center justify-center p-6 font-serif text-sm">No awwdio listening parties
+                        started yet... 😔
                     </div>
                 @endforelse
-
             </div>
         </div>
     </div>

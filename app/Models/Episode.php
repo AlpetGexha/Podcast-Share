@@ -11,18 +11,14 @@ class Episode extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'podcast_id',
-        'title',
-        'media_url',
-    ];
+    protected $guarded = ['id'];
 
     public function podcast(): BelongsTo
     {
         return $this->belongsTo(Podcast::class);
     }
 
-    public function listeningParty(): HasMany
+    public function listeningParties(): HasMany
     {
         return $this->hasMany(ListeningParty::class);
     }
