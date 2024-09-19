@@ -18,11 +18,10 @@ class ProcessPodcastUrl implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        public string         $rssUrl,
+        public string $rssUrl,
         public ListeningParty $listeningParty,
-        public Episode        $episode
-    )
-    {
+        public Episode $episode
+    ) {
         //
     }
 
@@ -45,7 +44,7 @@ class ProcessPodcastUrl implements ShouldQueue
         $latestEpisode = $xml->channel->item[0];
 
         $episodeTitle = $latestEpisode->title;
-        $episodeMediaUrl = (string)$latestEpisode->enclosure['url'];
+        $episodeMediaUrl = (string) $latestEpisode->enclosure['url'];
 
         // register the itunes namespace to grab the duration
         $namespaces = $xml->getNamespaces(true);
@@ -55,15 +54,15 @@ class ProcessPodcastUrl implements ShouldQueue
 
         // Try to get duration from iTunes namespace
         if ($itunesNamespace) {
-            $episodeLength = (string)$latestEpisode->children($itunesNamespace)->duration;
+            $episodeLength = (string) $latestEpisode->children($itunesNamespace)->duration;
         }
 
         // If iTunes namespace is not available or duration is empty, calculate from file size
         if (empty($episodeLength)) {
-            $fileSize = (int)$latestEpisode->enclosure['length'];
+            $fileSize = (int) $latestEpisode->enclosure['length'];
             $bitrate = 128000; // Assume 128 kbps as standard podcast bitrate
             $durationInSeconds = ceil($fileSize * 8 / $bitrate);
-            $episodeLength = (string)$durationInSeconds;
+            $episodeLength = (string) $durationInSeconds;
         }
 
         // Parse the duration
@@ -80,7 +79,7 @@ class ProcessPodcastUrl implements ShouldQueue
                 }
             } else {
                 // Duration is in seconds
-                $interval = CarbonInterval::seconds((int)$episodeLength);
+                $interval = CarbonInterval::seconds((int) $episodeLength);
             }
         } catch (Exception $e) {
             Log::error('Error parsing episode duration: ' . $e->getMessage());

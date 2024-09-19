@@ -239,9 +239,9 @@ new class extends Component {
                         </span>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="font-serif text-lg font-semibold text-slate-900">{{__('Creating your listening party')}}</p>
+                        <p class="font-serif text-lg font-semibold text-slate-900">{{ __('Creating your listening party') }}</p>
                         <p class="mt-1 text-sm text-slate-600">
-                            The {{config('app.name')}} room <span class="font-bold"> {{ $listeningParty->name }}</span>
+                            The {{ config('app.name') }} room <span class="font-bold"> {{ $listeningParty->name }}</span>
                             is being put
                             together...
                         </p>
@@ -249,7 +249,7 @@ new class extends Component {
                 </div>
             </div>
         </div>
-        {{--    @elseif($isFinished)--}}
+        {{--    @elseif ($isFinished)--}}
         {{--        <div class="flex items-center justify-center min-h-screen bg-primary-50">--}}
         {{--            <div class="w-full max-w-2xl p-8 mx-8 text-center bg-white rounded-lg shadow-lg">--}}
         {{--                <h2 class="mb-4 font-serif text-2xl font-bold text-slate-900">This listening party has finished 🥲</h2>--}}

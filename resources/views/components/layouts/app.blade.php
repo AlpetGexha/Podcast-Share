@@ -19,7 +19,7 @@
 </head>
 
 <body class="bg-primary-50">
-<x-button class="absolute z-50 top-4 left-4" xs flat href="/">← {{__('Home')}}</x-button>
+<x-button class="absolute z-50 top-4 left-4" xs flat href="/">← {{ __('Home') }}</x-button>
 {{ $slot }}
 </body>
 
