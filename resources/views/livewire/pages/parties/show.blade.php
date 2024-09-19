@@ -10,7 +10,7 @@ use Livewire\Volt\Component;
 new class extends Component {
     public ListeningParty $listeningParty;
 
-    public int $userId;
+    public int|string $userId;
 
     public array $emojis = [];
 
@@ -241,7 +241,8 @@ new class extends Component {
                     <div class="flex-1 min-w-0">
                         <p class="font-serif text-lg font-semibold text-slate-900">{{ __('Creating your listening party') }}</p>
                         <p class="mt-1 text-sm text-slate-600">
-                            The {{ config('app.name') }} room <span class="font-bold"> {{ $listeningParty->name }}</span>
+                            The {{ config('app.name') }} room <span
+                                class="font-bold"> {{ $listeningParty->name }}</span>
                             is being put
                             together...
                         </p>
@@ -404,9 +405,11 @@ new class extends Component {
                                             </div>
                                         </div>
                                     @empty
-                                        <span class="text-xs font-bold text-slate-900">
-                                            No Message Yet. Be the first
-                                        </span>
+                                        <div class="flex items-center ml-2 space-x-2">
+                                            <span class="text-xs font-bold text-slate-900">
+                                                No Message Yet. Be the first
+                                            </span>
+                                        </div>
                                     @endforelse
                                 </div>
                             </div>
